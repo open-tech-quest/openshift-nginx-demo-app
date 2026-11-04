@@ -4,13 +4,24 @@
 
 ## Build on Mac with Podman Destkop
 
-```
-export IMAGE="quay.io/openshift-examples/otq-openshift/nginx-example-app:$( date +%s )"
+### nginx
 
+```
+export IMAGE="quay.io/open-tech-quest/openshift-nginx-demo-app:$( date +%s )"
+podman manifest rm ${IMAGE}
 podman build --manifest ${IMAGE} \
-    -f nginx-example-app.Containerfile \
     --platform linux/amd64,linux/arm64 .
 
 podman manifest push ${IMAGE}
+```
 
+### initContainer
+```
+export IMAGE="quay.io/open-tech-quest/openshift-nginx-demo-app-init:$( date +%s )"
+podman manifest rm ${IMAGE}
+podman build --manifest ${IMAGE} \
+    -f init.Containerfile \
+    --platform linux/amd64,linux/arm64 .
+
+podman manifest push ${IMAGE}
 ```
